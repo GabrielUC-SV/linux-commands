@@ -24,6 +24,13 @@ sudo apt-get install docker-ce docker-ce-cli containerd.io docker-compose-plugin
 
 sudo service docker start
 
+sudo usermod -aG docker ${USER}
+
+su - ${USER}
+
+sudo usermod -aG docker gabriel-uc
+
+
 echo "----------------- Helm -----------------"
 
 curl https://baltocdn.com/helm/signing.asc | gpg --dearmor | sudo tee /usr/share/keyrings/helm.gpg > /dev/null
@@ -122,5 +129,20 @@ chmod 700 $HOME/.ssh
 touch $HOME/.ssh/authorized_keys
 
 chmod 600 $HOME/.ssh/authorized_keys
+
+
+
+echo "----------------- creating SSH key pair -----------------"
+
+cd $HOME/.ssh/
+
+ssh-keygen -t rsa
+
+
+echo "----------------- insatall ssh public key -----------------"
+
+cat $HOME/.ssh/id_rsa.pub | ssh 127.0.0.1 "sudo tee -a $HOME/.ssh/authorized_keys"
+
+cat $HOME/.ssh/id_rsa.pub > $HOME/.ssh/authorized_keys
 
 echo "All tools has been installed ........ "
