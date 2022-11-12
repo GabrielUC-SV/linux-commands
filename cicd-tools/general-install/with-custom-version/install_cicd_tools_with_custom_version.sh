@@ -10,17 +10,11 @@ sudo apt-get install \
     gnupg \
     lsb-release --yes
 
-sudo mkdir -p /etc/apt/keyrings
+apt-cache madison docker-ce
 
-curl -fsSL https://download.docker.com/linux/ubuntu/gpg | sudo gpg --dearmor -o /etc/apt/keyrings/docker.gpg
+apt-cache madison docker-ce-cli
 
-echo \
-  "deb [arch=$(dpkg --print-architecture) signed-by=/etc/apt/keyrings/docker.gpg] https://download.docker.com/linux/ubuntu \
-  $(lsb_release -cs) stable" | sudo tee /etc/apt/sources.list.d/docker.list > /dev/null
-
-sudo apt-get update
-
-sudo apt-get install docker-ce docker-ce-cli containerd.io docker-compose-plugin --yes
+sudo apt-get install docker-ce="5:19.03.12~3-0~ubuntu-focal" docker-ce-cli="5:19.03.12~3-0~ubuntu-focal" containerd.io docker-compose-plugin --yes
 
 sudo service docker start
 
@@ -32,35 +26,31 @@ read -p "Enter user for add to docker group: " username
 
 sudo usermod -aG docker $username
 
+
 echo "----------------- Helm -----------------"
-
-curl https://baltocdn.com/helm/signing.asc | gpg --dearmor | sudo tee /usr/share/keyrings/helm.gpg > /dev/null
-
-sudo apt-get install apt-transport-https --yes
-
-echo "deb [arch=$(dpkg --print-architecture) signed-by=/usr/share/keyrings/helm.gpg] https://baltocdn.com/helm/stable/debian/ all main" | sudo tee /etc/apt/sources.list.d/helm-stable-debian.list
 
 sudo apt-get update
 
-sudo apt-get install helm --yes
+apt-cache madison helm
+
+sudo apt-get install helm="3.1.2-1" --yes
 
 helm version
 
 echo "----------------- Kubernetes (Kubectl) -----------------"
 
-curl -LO https://storage.googleapis.com/kubernetes-release/release/`curl -s https://storage.googleapis.com/kubernetes-release/release/stable.txt`/bin/linux/amd64/kubectl
+curl -LO https://dl.k8s.io/release/v1.19.3/bin/linux/amd64/kubectl
 
-chmod +x ./kubectl
+sudo install -o root -g root -m 0755 kubectl /usr/local/bin/kubectl
 
-sudo mv ./kubectl /usr/local/bin/kubectl
+kubectl version --client --output=yaml
 
-kubectl version --client
 
 echo "----------------- RKE (Rancher) -----------------"
 
 curl -s https://api.github.com/repos/rancher/rke/releases/latest | grep download_url | grep amd64 | cut -d '"' -f 4 
 
-curl -LO "https://github.com/rancher/rke/releases/download/v1.4.0/rke_linux-amd64"
+curl -LO "https://github.com/rancher/rke/releases/download/v1.2.21-rc1/rke_linux-amd64"
 
 chmod +x ./rke_linux-amd64
 
