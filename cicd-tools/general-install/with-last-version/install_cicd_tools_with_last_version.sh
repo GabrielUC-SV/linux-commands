@@ -28,7 +28,9 @@ sudo usermod -aG docker ${USER}
 
 su - ${USER}
 
-sudo usermod -aG docker gabriel-uc
+read -p "Enter user for add to docker group: " username
+
+sudo usermod -aG docker $username
 
 
 echo "----------------- Helm -----------------"
