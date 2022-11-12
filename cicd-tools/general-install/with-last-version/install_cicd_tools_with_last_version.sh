@@ -103,7 +103,7 @@ for (( i = 0; i < ${#oldvalues[@]}; ++i )); do
 
     if grep -Fxq "${oldvalues[i]}" $filename
   then
-      sudo sed -i "s/$oldvalues[i]/$newvalues[i]/" $filename
+      sudo sed -i "s/${oldvalues[i]}/${newvalues[i]}/" $filename
       echo "${oldvalues[i]} : replaced"
   else
       echo "${oldvalues[i]} : not found"
