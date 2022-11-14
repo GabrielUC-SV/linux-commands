@@ -54,5 +54,40 @@ curl -LO https://storage.googleapis.com/minikube/releases/latest/minikube-linux-
 
 sudo install minikube-linux-amd64 /usr/local/bin/minikube
 
+minikube start
+
+echo "----------------- Install Istio -----------------"
+
+helm repo add istio https://istio-release.storage.googleapis.com/charts
+
+helm repo update
+
+minikube kubectl create namespace istio-system
+
+helm install istio-base istio/base -n istio-system
+
+helm install istiod istio/istiod -n istio-system --wait
+
+minikube kubectl create namespace istio-ingress
+
+minikube kubectl label namespace istio-ingress istio-injection=enabled
+
+helm install istio-ingress istio/gateway -n istio-ingress --wait
+
+helm status istiod -n istio-system
+
+echo "----------------- insatall Kiali -----------------"
+
+helm repo add kiali https://kiali.org/helm-charts
+
+helm repo update
+
+helm install \
+    --set cr.create=true \
+    --set cr.namespace=istio-system \
+    --namespace kiali-operator \
+    --create-namespace \
+    kiali-operator \
+    kiali/kiali-operator
 
 echo "All tools has been installed ........ "
