@@ -56,21 +56,25 @@ sudo install minikube-linux-amd64 /usr/local/bin/minikube
 
 minikube start
 
+minikube kubectl -- get pods -A
+
+alias kubectl="minikube kubectl"
+
 echo "----------------- Install Istio -----------------"
 
 helm repo add istio https://istio-release.storage.googleapis.com/charts
 
 helm repo update
 
-minikube kubectl create namespace istio-system
+kubectl create namespace istio-system
 
 helm install istio-base istio/base -n istio-system
 
 helm install istiod istio/istiod -n istio-system --wait
 
-minikube kubectl create namespace istio-ingress
+kubectl create namespace istio-ingress
 
-minikube kubectl label namespace istio-ingress istio-injection=enabled
+kubectl label namespace istio-ingress istio-injection=enabled
 
 helm install istio-ingress istio/gateway -n istio-ingress --wait
 
