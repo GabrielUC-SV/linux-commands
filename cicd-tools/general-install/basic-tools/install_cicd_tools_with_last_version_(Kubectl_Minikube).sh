@@ -64,8 +64,4 @@ curl -LO https://storage.googleapis.com/minikube/releases/latest/minikube-linux-
 
 sudo install minikube-linux-amd64 /usr/local/bin/minikube
 
-minikube start
-
-minikube kubectl -- get pods -A
-
 echo "All tools has been installed ........ "
