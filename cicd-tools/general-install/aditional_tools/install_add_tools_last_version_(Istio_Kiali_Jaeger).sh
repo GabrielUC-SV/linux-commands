@@ -81,9 +81,9 @@ echo "Path file: ${HOME}/configFiles/kiali/${fileKiali}"
 
 read -p "Enter Kiali token login: " tokenKiali
 
-if grep -Fxq "signing_key: CHANGEME00000000" $filename
+if grep -Fxq "CHANGEME00000000" $filename
 then
-    sed -i "s/signing_key: CHANGEME00000000/${tokenKiali}/" $filename
+    sed -i "s/CHANGEME00000000/${tokenKiali}/" $filename
     echo "Token login has been replaced"
 else
     echo "Token login not found"
