@@ -65,31 +65,31 @@ echo "----------------- Deploy Kiali on kubernetes -----------------"
 
 cd $HOME/configFiles
 
-mkdir kialy
+mkdir kiali
 
-cd kialy
+cd kiali
 
-read -p "Enter URL Kialy yaml: " urlKialy
+read -p "Enter URL Kiali yaml: " urlKiali
 
-wget $urlKialy
+wget $urlKiali
 
-read -p "Enter yaml file name: " fileKialy
+read -p "Enter yaml file name: " fileKiali
 
-filename="${HOME}/configFiles/kialy/${fileKialy}"
+filename="${HOME}/configFiles/kiali/${fileKiali}"
 
-echo "Path file: ${HOME}/configFiles/kialy/${fileKialy}"
+echo "Path file: ${HOME}/configFiles/kiali/${fileKiali}"
 
-read -p "Enter Kiali token login: " tokenKialy
+read -p "Enter Kiali token login: " tokenKiali
 
 if grep -Fxq "signing_key: CHANGEME00000000" $filename
 then
-    sed -i "s/signing_key: CHANGEME00000000/${tokenKialy}/" $filename
+    sed -i "s/signing_key: CHANGEME00000000/${tokenKiali}/" $filename
     echo "Token login has been replaced"
 else
     echo "Token login not found"
 fi
 
-kubectl apply -f $fileKialy
+kubectl apply -f $fileKiali
 
 echo "----------------- Deploy Jaeger on kubernetes -----------------"
 
@@ -99,7 +99,7 @@ mkdir jaeger
 
 cd jaeger
 
-read -p "Enter URL Kialy yaml: " urlJaeger
+read -p "Enter URL Jaeger yaml: " urlJaeger
 
 wget $urlJaeger
 
