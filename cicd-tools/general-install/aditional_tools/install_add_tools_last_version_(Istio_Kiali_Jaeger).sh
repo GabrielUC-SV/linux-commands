@@ -81,13 +81,9 @@ echo "Path file: ${HOME}/configFiles/kiali/${fileKiali}"
 
 read -p "Enter Kiali token login: " tokenKiali
 
-if grep -Fxq "CHANGEME00000000" $filename
-then
-    sed -i "s/CHANGEME00000000/${tokenKiali}/" $filename
-    echo "Token login has been replaced"
-else
-    echo "Token login not found"
-fi
+initToken="CHANGEME00000000"
+
+sed -i "s/${initToken}/${tokenKiali}/" $filename
 
 kubectl apply -f $fileKiali
 
