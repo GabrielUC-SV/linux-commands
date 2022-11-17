@@ -105,6 +105,12 @@ kubectl apply -f $fileJaeger
 
 echo "----------------- Jenkins -----------------"
 
+# Reference: https://www.jenkins.io/doc/book/installing/linux/#debianubuntu
+
+sudo apt update
+
+sudo apt install openjdk-11-jre #openjdk-11-*
+
 curl -fsSL https://pkg.jenkins.io/debian/jenkins.io.key | sudo tee \/usr/share/keyrings/jenkins-keyring.asc > /dev/null
 
 echo deb [signed-by=/usr/share/keyrings/jenkins-keyring.asc] \https://pkg.jenkins.io/debian binary/ | sudo tee \/etc/apt/sources.list.d/jenkins.list > /dev/null
@@ -112,5 +118,11 @@ echo deb [signed-by=/usr/share/keyrings/jenkins-keyring.asc] \https://pkg.jenkin
 sudo apt-get update
 
 sudo apt-get install jenkins
+
+echo "----------------- Nexus -----------------"
+
+# Reference: https://www.fosstechnix.com/how-to-install-nexus-repository-on-ubuntu/
+
+sudo apt install openjdk-8-jre-headless
 
 echo "All tools has been installed ........ "
