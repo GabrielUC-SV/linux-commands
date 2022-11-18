@@ -16,6 +16,8 @@ minikube kubectl -- get pods -A
 
 minikube addons enable ingress
 
+minikube addons enable metrics-server
+
 echo "----------------- Istio -----------------"
 
 # Reference: https://istio.io/latest/docs/setup/install/helm/
